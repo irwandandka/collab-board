@@ -50,7 +50,7 @@ return [
              *
              */
 
-            'credentials' => env('FIREBASE_CREDENTIALS', env('GOOGLE_APPLICATION_CREDENTIALS')),
+            'credentials' => env('FIREBASE_CREDENTIALS', storage_path('app/firebase/credentials.json')),
 
             /*
              * ------------------------------------------------------------------------
@@ -102,7 +102,7 @@ return [
                  * https://my-project-id.firebaseio.com
                  */
 
-                'url' => env('FIREBASE_DATABASE_URL'),
+                'url' => env('FIREBASE_DATABASE_URL', ''),
 
                 /*
                  * As a best practice, a service should have access to only the resources it needs.
