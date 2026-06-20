@@ -1,58 +1,136 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🏗️ Collab Board
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://img.shields.io/badge/Laravel-11-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" />
+  <img src="https://img.shields.io/badge/Livewire-3-4E56A6?style=for-the-badge&logo=livewire&logoColor=white" />
+  <img src="https://img.shields.io/badge/Firebase-Realtime_DB-FFCA28?style=for-the-badge&logo=firebase&logoColor=black" />
+  <img src="https://img.shields.io/badge/PHP-8.4-777BB4?style=for-the-badge&logo=php&logoColor=white" />
 </p>
 
-## About Laravel
+<p align="center">
+  Real-time collaborative architecture board — dibuat untuk demo <strong>Batam DEV</strong>.<br/>
+  Audience scan QR code, tambah komponen, dan liat canvas bergerak bareng secara live.
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ Demo
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+> 🚧 Work in progress — dibangun live di Batam DEV
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 💡 Ide
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Daripada presentasi satu arah, bagaimana kalau **semua orang ikut mendesain sistemnya bareng**?
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+1. Presenter tampilkan QR code di layar
+2. Audience scan → buka di HP masing-masing
+3. Audience pilih komponen arsitektur (Database, API, Queue, dll)
+4. Komponen langsung muncul di canvas presenter — **tanpa refresh**
 
-## Agentic Development
+---
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## 🧱 Tech Stack
+
+| Layer | Teknologi |
+|---|---|
+| Backend | Laravel 11 |
+| Realtime | Firebase Realtime Database |
+| Frontend Presenter | Livewire 3 + Alpine.js |
+| Frontend Audience | Blade + Vanilla JS |
+| Canvas | Konva.js |
+| QR Code | `simplesoftwareio/simple-qrcode` |
+| Firebase PHP | `kreait/laravel-firebase` |
+
+---
+
+## 🚀 Instalasi
+
+### Prerequisites
+
+- PHP >= 8.4
+- Composer
+- Node.js >= 18
+- Akun Firebase (gratis)
+
+### Setup
 
 ```bash
-composer require laravel/boost --dev
+# Clone repo
+git clone https://github.com/irwanda/collab-board.git
+cd collab-board
 
-php artisan boost:install
+# Install dependencies
+composer install
+npm install
+
+# Setup environment
+cp .env.example .env
+php artisan key:generate
+
+# Jalankan
+php artisan serve
+npm run dev
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### Firebase Setup
 
-## Contributing
+1. Buat project di [Firebase Console](https://console.firebase.google.com)
+2. Aktifkan **Realtime Database**
+3. Download service account key → simpan ke `storage/app/firebase/credentials.json`
+4. Isi variabel Firebase di `.env` (lihat `.env.example`)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## 🗂️ Struktur Project
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
+collab-board/
+├── app/
+│   ├── Http/Controllers/
+│   │   ├── SessionController.php     # Kelola sesi & QR code
+│   │   └── ComponentController.php   # Handle komponen canvas
+│   ├── Livewire/
+│   │   └── PresenterCanvas.php       # Layar presenter (big screen)
+│   └── Services/
+│       └── FirebaseService.php       # Wrapper Firebase operations
+├── resources/views/
+│   ├── welcome.blade.php             # Buat sesi baru
+│   ├── presenter.blade.php           # Layar besar
+│   └── audience.blade.php            # View HP audience
+└── routes/web.php
+```
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 🗺️ Alur Data
 
-## License
+```
+Audience (HP)
+    │
+    │  HTTP POST (add component)
+    ▼
+Laravel Backend
+    │  validate & write
+    ▼
+Firebase Realtime DB ──── real-time listen ────▶ Presenter Canvas
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## 🧩 Component Types
+
+`client` · `api` · `database` · `cache` · `queue` · `load_balancer` · `storage` · `note`
+
+---
+
+## 📄 License
+
+MIT — bebas dipakai dan dimodifikasi.
+
+---
+
+<p align="center">
+  Dibuat dengan ☕ untuk <a href="#">Batam DEV Community</a>
+</p>
